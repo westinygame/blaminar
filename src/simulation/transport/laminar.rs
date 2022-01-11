@@ -13,7 +13,7 @@ use crate::simulation::{
     transport::TransportResource,
 };
 use bevy::prelude::{Plugin, Res, ResMut, EventWriter, IntoSystem};
-use bevy::app::AppBuilder;
+use bevy::app::App;
 use std::net::SocketAddr;
 
 /// Use this plugin to add the laminar transport layer to your game.
@@ -29,7 +29,7 @@ impl LaminarPlugin {
 }
 
 impl Plugin for LaminarPlugin {
-    fn build(&self, app: &mut AppBuilder) {
+    fn build(&self, app: &mut App) {
         app
             .add_startup_system(log_startup.system())
             .add_event::<NetworkSimulationEvent>()

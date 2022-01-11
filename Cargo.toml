@@ -1,12 +1,12 @@
 [package]
 name = "blaminar"
 version = "0.1.0"
-edition = "2018"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = "0.5.0"
+bevy = "0.6.0"
 bytes = "1.1.0"
 laminar = "0.5.0"
 log = "0.4.14"
