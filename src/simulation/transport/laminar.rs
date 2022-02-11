@@ -12,9 +12,12 @@ use crate::simulation::{
     timing::{NetworkSimulationTime, network_simulation_time_system},
     transport::TransportResource,
 };
-use bevy::prelude::{Plugin, Res, ResMut, EventWriter, IntoSystem};
+use bevy::prelude::{Plugin, Res, ResMut, EventWriter, IntoSystem, SystemSet, SystemLabel};
 use bevy::app::App;
 use std::net::SocketAddr;
+
+#[derive(SystemLabel, Clone, Hash, Debug, PartialEq, Eq)]
+pub struct LaminarLabel;
 
 /// Use this plugin to add the laminar transport layer to your game.
 pub struct LaminarPlugin {
@@ -37,10 +40,13 @@ impl Plugin for LaminarPlugin {
             .init_resource::<TransportResource>()
             .insert_resource(LaminarSocketResource::new(
                 LaminarSocket::bind_with_config(self.address, self.config.clone()).ok()))
-            .add_system(network_simulation_time_system.system())
-            .add_system(laminar_network_send_system.system())
-            .add_system(laminar_network_poll_system.system())
-            .add_system(laminar_network_recv_system.system());
+            .add_system_set(SystemSet::new()
+                .label(LaminarLabel)
+                .with_system(network_simulation_time_system.system())
+                .with_system(laminar_network_send_system.system())
+                .with_system(laminar_network_poll_system.system())
+                .with_system(laminar_network_recv_system.system())
+            );
     }
 
     fn name(&self) -> &str {
