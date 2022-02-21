@@ -12,7 +12,7 @@ use crate::simulation::{
     timing::{NetworkSimulationTime, network_simulation_time_system},
     transport::TransportResource,
 };
-use bevy::prelude::{Plugin, Res, ResMut, EventWriter, IntoSystem, SystemSet, SystemLabel};
+use bevy::prelude::{Plugin, Res, ResMut, EventWriter, SystemSet, SystemLabel};
 use bevy::app::App;
 use std::net::SocketAddr;
 
@@ -34,7 +34,7 @@ impl LaminarPlugin {
 impl Plugin for LaminarPlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_startup_system(log_startup.system())
+            .add_startup_system(log_startup)
             .add_event::<NetworkSimulationEvent>()
             .init_resource::<NetworkSimulationTime>()
             .init_resource::<TransportResource>()
@@ -42,10 +42,10 @@ impl Plugin for LaminarPlugin {
                 LaminarSocket::bind_with_config(self.address, self.config.clone()).ok()))
             .add_system_set(SystemSet::new()
                 .label(LaminarLabel)
-                .with_system(network_simulation_time_system.system())
-                .with_system(laminar_network_send_system.system())
-                .with_system(laminar_network_poll_system.system())
-                .with_system(laminar_network_recv_system.system())
+                .with_system(network_simulation_time_system)
+                .with_system(laminar_network_send_system)
+                .with_system(laminar_network_poll_system)
+                .with_system(laminar_network_recv_system)
             );
     }
 
