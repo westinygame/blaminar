@@ -2,7 +2,7 @@
 //! frame rate.
 
 use std::{ops::RangeInclusive, time::Duration};
-use bevy::prelude::{ResMut, Res, Time};
+use bevy::prelude::{Resource, ResMut, Res, Time};
 
 /// Default number of network simulation frames per second.
 const DEFAULT_SIM_FRAME_RATE: u32 = 30;
@@ -18,7 +18,7 @@ pub fn network_simulation_time_system(mut sim_time:  ResMut<NetworkSimulationTim
 }
 
 /// Resource to track the state of the network simulation separately from the ECS frame timings
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Resource)]
 pub struct NetworkSimulationTime {
     /// The current simulation frame
     frame_number: u32,

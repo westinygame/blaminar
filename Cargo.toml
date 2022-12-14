@@ -4,7 +4,7 @@ version = "0.3.0"
 edition = "2021"
 
 [dependencies]
-bevy = "0.8.0"
+bevy = "0.9.1"
 bytes = "1.1.0"
 laminar = "0.5.0"
 log = "0.4.14"

@@ -12,7 +12,7 @@ use crate::simulation::{
     timing::{NetworkSimulationTime, network_simulation_time_system},
     transport::TransportResource,
 };
-use bevy::prelude::{Plugin, Res, ResMut, EventWriter, SystemSet, SystemLabel};
+use bevy::prelude::{Plugin, Resource, Res, ResMut, EventWriter, SystemSet, SystemLabel};
 use bevy::app::App;
 use std::net::SocketAddr;
 
@@ -157,6 +157,7 @@ pub fn laminar_network_recv_system(mut socket:        ResMut<LaminarSocketResour
 }
 
 /// Resource that owns the Laminar socket.
+#[derive(Resource)]
 pub struct LaminarSocketResource {
     socket: Option<LaminarSocket>,
 }
@@ -183,15 +184,5 @@ impl LaminarSocketResource {
     /// Returns a mutable reference to the socket if there is one configured.
     pub fn get_mut(&mut self) -> Option<&mut LaminarSocket> {
         self.socket.as_mut()
-    }
-
-    /// Sets the bound socket to the `LaminarSocketResource`.
-    pub fn set_socket(&mut self, socket: LaminarSocket) {
-        self.socket = Some(socket);
-    }
-
-    /// Drops the socket from the `LaminarSocketResource`.
-    pub fn drop_socket(&mut self) {
-        self.socket = None;
     }
 }

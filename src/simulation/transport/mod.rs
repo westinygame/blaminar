@@ -5,7 +5,7 @@
 pub mod laminar;
 
 use std::{collections::VecDeque, net::SocketAddr};
-
+use bevy::prelude::Resource;
 use crate::simulation::{
     message::Message,
     requirements::{DeliveryRequirement, UrgencyRequirement},
@@ -13,6 +13,7 @@ use crate::simulation::{
 
 /// Resource serving as the owner of the queue of messages to be sent. This resource also serves
 /// as the interface for other systems to send messages.
+#[derive(Resource)]
 pub struct TransportResource {
     messages: VecDeque<Message>,
     frame_budget_bytes: i32,
