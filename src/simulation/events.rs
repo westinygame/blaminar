@@ -1,11 +1,10 @@
 use std::{io, net::SocketAddr};
-
 use bytes::Bytes;
-
 use crate::simulation::Message;
+use bevy::prelude::Resource;
 
 /// Events which can be received from the network.
-#[derive(Debug)]
+#[derive(Debug, Resource)]
 pub enum NetworkSimulationEvent {
     // A message was received from a remote client
     Message(SocketAddr, Bytes),
